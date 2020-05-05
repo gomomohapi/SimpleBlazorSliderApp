@@ -1,13 +1,31 @@
 ﻿@page "/bonus"
 @using SimpleBlazorSliderApp.Data
 
+<h3>Student Partner Bonuses</h3>
+
+<div class="budget">
+    @foreach (var level in levels)
+    {
+        <span>@level.Name:</span>
+        <span>@level.Amount.ToString("c0")</span>
+        <input type="range" max="@(level.Amount + Remaining)" step="1000"
+               @bind="@level.Amount" @bind:event="oninput"
+               style="width: @((int)(100 * (level.Amount + Remaining) / totalBudget))%" />
+    }
+
+    <span>Remaining:</span>
+    <span>@Remaining.ToString("c0")</span>
+</div>
+
+<button disabled="@(Remaining > 0)">Save</button>
+
 @code {
     decimal totalBudget = 1000000;
 
     decimal Remaining => totalBudget - levels.Sum(i => i.Amount);
 
     List<MSPLevel> levels = new List<MSPLevel>
-    {
+{
         new MSPLevel { Name = "Gold" },
         new MSPLevel { Name = "Beta" },
         new MSPLevel { Name = "Alpha 2" },
