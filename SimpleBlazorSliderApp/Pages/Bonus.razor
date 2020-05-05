@@ -1,5 +1,16 @@
-﻿<h3>Bonus</h3>
+﻿@page "/bonus"
+@using SimpleBlazorSliderApp.Data
 
 @code {
+    decimal totalBudget = 1000000;
 
+    decimal Remaining => totalBudget - levels.Sum(i => i.Amount);
+
+    List<MSPLevel> levels = new List<MSPLevel>
+    {
+        new MSPLevel { Name = "Gold" },
+        new MSPLevel { Name = "Beta" },
+        new MSPLevel { Name = "Alpha 2" },
+        new MSPLevel { Name = "Alpha 1" }
+    };
 }
